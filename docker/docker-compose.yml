@@ -14,7 +14,7 @@ services:
       - balance_keeper_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
       retries: 5
     networks:
@@ -22,15 +22,16 @@ services:
 
   balance-keeper-migrate:
     image: migrate/migrate
+    restart: "no"
     container_name: balance-keeper-migrate
     depends_on:
       balance-keeper-postgres:
         condition: service_healthy
     volumes:
-      - ../balance-keeper-service/migrations:/migrations
+      - ../balance-keeper-service/migrations:/migration
     command:
       [
-        "-path", "/migrations",
+        "-path", "/migration",
         "-database", "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@balance-keeper-postgres:5432/${POSTGRES_DB}?sslmode=disable",
         "up"
       ]
