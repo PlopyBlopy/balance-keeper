@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/PlopyBlopy/balance-keeper-service/internal/shared/config"
+	_ "github.com/golang-migrate/migrate/v4"
 	"go.uber.org/zap"
 )
 
