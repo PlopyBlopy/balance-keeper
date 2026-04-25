@@ -1,6 +1,9 @@
 set dotenv-path := "./docker/.env"
 set windows-shell := ["powershell.exe", "-NoProfile", "-c"]
 
+run:
+    go run .\balance-keeper-service\cmd\main.go
+
 # create containers applies migrations on database and remove migration container
 docker-up:
     docker-compose -f ./docker/docker-compose.yml up --abort-on-container-exit balance-keeper-migrate
